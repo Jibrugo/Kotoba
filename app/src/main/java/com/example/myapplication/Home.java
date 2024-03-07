@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,7 @@ public class Home extends AppCompatActivity
         generateButtons();
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private void generateButtons() {
         LinearLayout buttonContainer = findViewById(R.id.buttonContainer);
 
@@ -42,7 +44,7 @@ public class Home extends AppCompatActivity
             params.topMargin = dpToPx(20); // Marge top
             button.setLayoutParams(params);
             button.setBackground(getResources().getDrawable(R.drawable.rounded_button));
-            button.setText(" Button "+i+" ");
+            button.setText("B "+i);
 
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -50,11 +52,10 @@ public class Home extends AppCompatActivity
                     // Action à exécuter lors du clic sur le bouton
                     // Par exemple, afficher un toast
                     Toast.makeText(Home.this, "Bouton cliqué", Toast.LENGTH_SHORT).show();
-//                    setContentView(R.layout.login);
+                    // setContentView(R.layout.login);
                 }
             });
 
-            // Ajoutez le bouton au conteneur
             buttonContainer.addView(button);
         }
     }
