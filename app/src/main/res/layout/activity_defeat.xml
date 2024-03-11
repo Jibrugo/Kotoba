@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EndActivity">
+
+
+  <Space
+      android:layout_width="match_parent"
+      android:layout_height="301dp" />
+
+  <TextView
+      android:id="@+id/motATrouverTextView"
+      android:layout_width="170dp"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="Mot à trouver : "
+      android:textColor="#000000"
+      android:textSize="18sp" />
+
+  <TextView
+      android:layout_gravity="center"
+      android:id="@+id/tempsTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Temps : "
+      android:textColor="#000000"
+      android:textSize="18sp" />
+
+  <TextView
+      android:layout_gravity="center"
+      android:id="@+id/essaisTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Nombre d'essais : "
+      android:textColor="#000000"
+      android:textSize="18sp" />
+
+</LinearLayout>

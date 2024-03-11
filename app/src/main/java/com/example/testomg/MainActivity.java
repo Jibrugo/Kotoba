@@ -1,11 +1,20 @@
 package com.example.testomg;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
+import java.util.Random;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
 import android.graphics.Color;
 import android.text.InputFilter;
 import android.widget.TextView;
@@ -14,12 +23,39 @@ import java.io.IOException;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    
+    public String selectRandom(int taille) {
+        BufferedReader reader = null;
+        List<String> words = new ArrayList<>();
+        try {
 
+            reader = new BufferedReader(
+                    new InputStreamReader(getAssets().open("mots_taille_" + taille + "_lettres.txt")));
+            String mLine;
+            while ((mLine = reader.readLine()) != null) {
+                words.add(mLine.trim());
+            }
 
+            // Vérifiez si la liste n'est pas vide avant de sélectionner un mot aléatoire
+            if (!words.isEmpty()) {
+                // Générez un index aléatoire
+                Random random = new Random();
+                int randomIndex = random.nextInt(words.size());
 
+                // Récupérez le mot à l'index aléatoire
+                return words.get(randomIndex);
+            }
 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
 
     public boolean rechercherMotDansFichier(String motRecherche) {
         BufferedReader reader = null;
@@ -53,11 +89,8 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         return false;
     }
-
-
 
 
     // Fonction pour comparer le mot proposé avec le mot mystère
@@ -75,7 +108,18 @@ public class MainActivity extends AppCompatActivity {
                 return Color.RED;
             }
     }
+    private void adjustTextSizeBasedOnScreen(TextView textView) {
+        // Obtenez les dimensions de l'écran
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
 
+        // Définissez la taille du texte en fonction de la largeur de l'écran
+        float textSize = screenWidth / getResources().getDisplayMetrics().density / 10; // Vous pouvez ajuster ce facteur
+
+        // Appliquez la taille du texte au TextView
+        textView.setTextSize(textSize);
+    }
     private void afficherLettresAvecCouleur(LinearLayout layoute ,String motPropose, String motMystere) {
         layoute.removeAllViews(); // Effacez les vues précédentes
 
@@ -88,8 +132,8 @@ public class MainActivity extends AppCompatActivity {
             TextView lettreTextView = new TextView(this);
             lettreTextView.setText(String.valueOf(lettrePropo));
             lettreTextView.setTextColor(Color.BLACK);
-            lettreTextView.setTextSize(20); // Ajustez la taille de la police selon vos besoins
-
+            lettreTextView.setGravity(Gravity.CENTER);
+            adjustTextSizeBasedOnScreen(lettreTextView); // Ajustez la taille de la police selon vos besoins
             // Appliquez la couleur de fond en fonction de la lettre et de la règle que vous avez définie
             int couleurFond = checkMot(lettreMyst,lettrePropo, motMystere);
             lettreTextView.setBackgroundColor(couleurFond);
@@ -99,14 +143,24 @@ public class MainActivity extends AppCompatActivity {
                     ViewGroup.LayoutParams.WRAP_CONTENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
             );
-            params.setMargins(5, 5, 5, 5); // Ajustez les marges selon vos besoins
+            params.setMargins(10, 10, 10, 10); // Ajustez les marges selon vos besoins
             lettreTextView.setLayoutParams(params);
 
             layoute.addView(lettreTextView);
         }
     }
 
-
+    private void victoire(int cpt, String mot){
+        Intent intent = new Intent(MainActivity.this, EndActivity.class);
+        intent.putExtra("nombreEssais", cpt); // Remplacez nombreEssais par la variable réelle
+        intent.putExtra("motATrouver", mot); // Remplacez motATrouver par la variable réelle
+        startActivity(intent);
+    }
+    private void defaite(String mot){
+        Intent intent = new Intent(MainActivity.this, Defeat.class);
+        intent.putExtra("motATrouver", mot); // Remplacez motATrouver par la variable réelle
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,15 +175,18 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout  propo6 = findViewById(R.id.Proposition6);
         EditText editText = findViewById(R.id.EntreeMots);
         // mot mystère
-        String mot = "LAPIN";
+        Random random = new Random();
+
+        // Obtenez un nombre aléatoire entre 2 (inclus) et 10 (exclus)
+        int nombreAleatoire = random.nextInt(8) + 2;
+        String mot = selectRandom(nombreAleatoire);
         // faire fonction de check in des lettres pour afficher en conséquence
         // du toUpperCase
         // Faire Char par char et attribué une value en mode matrice du mot -> couleur selon 0 1 2
         
 
-
         // faudra limiter selon le mot de la partie
-        int maxLength = 5;
+        int maxLength = mot.length();
         editText.setFilters(new InputFilter[]{new InputFilter.AllCaps(),new InputFilter.LengthFilter(maxLength)});
 
         // Compteur de la proposition combien on est pour switch
@@ -167,6 +224,15 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     default:
                         break;
+                }
+                if(editText.getText().toString().equals(mot) && cpt[0] <= 7){
+                    victoire(cpt[0],mot);
+                    button.setEnabled(false);
+                    cpt[0] = 8;
+                } else if ((!editText.getText().toString().equals(mot)) && cpt[0] == 7) {
+                    defaite(mot);
+                    button.setEnabled(false);
+                    cpt[0] = 8;
                 }
                 editText.setText((""));
             }
