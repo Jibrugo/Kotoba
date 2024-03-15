@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -52,7 +53,7 @@ public class Home extends AppCompatActivity
                     // Action à exécuter lors du clic sur le bouton
                     // Par exemple, afficher un toast
                     Toast.makeText(Home.this, "Bouton cliqué", Toast.LENGTH_SHORT).show();
-                    // setContentView(R.layout.login);
+                    setContentView(R.layout.login);
                 }
             });
 

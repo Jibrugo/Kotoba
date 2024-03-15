@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Style pour arrondir les bords du TextInputLayout -->
+    <style name="RoundedTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <!-- Appliquer une forme arrondie -->
+        <item name="shapeAppearanceOverlay">@style/RoundedShapeAppearanceOverlay</item>
+    </style>
+
+    <!-- Style pour définir la forme arrondie -->
+    <style name="RoundedShapeAppearanceOverlay" parent="">
+        <!-- Utiliser la famille de coins arrondis -->
+        <item name="cornerFamily">rounded</item>
+        <!-- Définir la taille des coins (en dp) -->
+        <item name="cornerSize">16dp</item>
+    </style>
+</resources>
