@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginTop="16dp"
+android:gravity="center"
+android:orientation="horizontal">
+
+<ImageButton
+    android:id="@+id/home_button"
+    android:layout_width="0dp"
+    android:layout_height="48dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_weight="1"
+    android:background="@null"
+    android:contentDescription="Button home"
+    android:scaleType="centerInside"
+    android:src="@raw/home">
+
+</ImageButton>
+
+<ImageButton
+    android:id="@+id/achivement_button"
+    android:layout_width="0dp"
+    android:layout_height="55dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_weight="1"
+    android:background="@null"
+    android:contentDescription="Button achievement"
+    android:scaleType="centerInside"
+    android:src="@raw/achievement"></ImageButton>
+
+<ImageButton
+    android:id="@+id/profile_button"
+    android:layout_width="0dp"
+    android:layout_height="50dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_weight="1"
+    android:background="@null"
+    android:contentDescription="Button user profile"
+    android:scaleType="centerInside"
+    android:src="@raw/user"></ImageButton>
+
+<ImageButton
+    android:id="@+id/more_button"
+    android:layout_width="0dp"
+    android:layout_height="48dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginEnd="8dp"
+    android:layout_weight="1"
+    android:background="@null"
+    android:contentDescription="Button more"
+    android:scaleType="centerInside"
+    android:src="@raw/more"></ImageButton>
+
+
+</LinearLayout>

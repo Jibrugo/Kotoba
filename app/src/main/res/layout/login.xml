@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".login">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Kotoba"
+                    android:textAlignment="center"
+                    android:textColor="#000000"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.05"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.6"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_weight="0.5"
+                                android:orientation="vertical">
+
+                                <androidx.constraintlayout.widget.ConstraintLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                    <androidx.cardview.widget.CardView
+                                        android:layout_width="150dp"
+                                        android:layout_height="150dp"
+                                        android:layout_margin="5dp"
+                                        android:elevation="10dp"
+                                        app:cardCornerRadius="100dp"
+                                        app:layout_constraintBottom_toBottomOf="parent"
+                                        app:layout_constraintEnd_toEndOf="parent"
+                                        app:layout_constraintStart_toStartOf="parent"
+                                        app:layout_constraintTop_toTopOf="parent"
+                                        app:strokeColor="@android:color/black"
+                                        app:strokeWidth="5dp">
+
+                                        <ImageView
+                                            android:id="@+id/roundedImageView"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="match_parent"
+                                            android:background="@color/white"
+                                            android:scaleType="centerCrop"
+                                            android:src="@raw/train" />
+                                    </androidx.cardview.widget.CardView>
+                                </androidx.constraintlayout.widget.ConstraintLayout>
+                            </LinearLayout>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"
+                        android:orientation="vertical">
+
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Email"
+                                android:textColor="#000000"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/textInputLayout2"
+                                    style="@style/RoundedTextInputLayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    app:boxStrokeWidth="0dp"
+                                    app:boxStrokeWidthFocused="0dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="0.3"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintWidth_percent="0.8"
+                                    tools:ignore="MissingConstraints">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="Adresse email" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Mot de passe"
+                                android:textColor="#000000"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/textInputLayout1"
+                                    style="@style/RoundedTextInputLayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    app:boxStrokeWidth="0dp"
+                                    app:boxStrokeWidthFocused="0dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="0.3"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintWidth_percent="0.8"
+                                    tools:ignore="MissingConstraints">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="Mot de passe" />
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Mot de passe"
+                                android:textColor="#000000"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <androidx.constraintlayout.widget.ConstraintLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:id="@+id/textInputLayout3"
+                                    style="@style/RoundedTextInputLayout"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="16dp"
+                                    android:layout_marginBottom="16dp"
+                                    app:boxStrokeWidth="0dp"
+                                    app:boxStrokeWidthFocused="0dp"
+                                    app:layout_constraintEnd_toEndOf="parent"
+                                    app:layout_constraintHorizontal_bias="0.3"
+                                    app:layout_constraintStart_toStartOf="parent"
+                                    app:layout_constraintWidth_percent="0.8"
+                                    tools:ignore="MissingConstraints">
+
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:hint="Mot de passe"/>
+
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center">
+
+                                    <Button
+                                        style="@style/RoundedTextInputLayout"
+                                        android:layout_width="300dp"
+                                        android:layout_height="wrap_content"
+                                        android:textSize="24dp"
+                                        android:text="Valider">
+
+                                    </Button>
+
+                                </LinearLayout>
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+
+                <include
+                    android:id="@+id/toolbar"
+                    layout="@layout/toolbar_layout" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
