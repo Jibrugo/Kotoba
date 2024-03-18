@@ -77,6 +77,14 @@
             android:text="Proposer"
             />
 
+        <Button
+            android:id="@+id/motSuivantButton"
+            android:layout_width="108dp"
+            android:layout_height="wrap_content"
+            android:text="Mot Suivant"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
