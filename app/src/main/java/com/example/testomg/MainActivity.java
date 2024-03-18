@@ -1,35 +1,24 @@
 package com.example.testomg;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import java.util.Random;
-
 import android.view.KeyEvent;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-
 import android.graphics.Color;
 import android.text.InputFilter;
 import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.FileReader;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     
@@ -61,13 +50,16 @@ public class MainActivity extends AppCompatActivity {
         return "";
     }
 
+    // permet de vérifier l'existance du mot
     public boolean rechercherMotDansFichier(String motRecherche) {
         BufferedReader reader = null;
         try {
             reader = new BufferedReader(
+                    // Ouverture du fichier
                     new InputStreamReader(getAssets().open("dicoscrabble.txt")));
 
             String mLine;
+            // lecture toutes les lignes
             while ((mLine = reader.readLine()) != null) {
                 if(mLine.equals(motRecherche)){
                     return true;
@@ -77,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        // idem 2ème fichier
         try {
             reader = new BufferedReader(
                     new InputStreamReader(getAssets().open("dicoscrabble2.txt")));
@@ -154,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Récupère le mot propose pour conserver un affichage des lettres qui sont bonnes dans l'affichage de proposition suivante
     private String motmodif(String motPropose,String motMystere){
 
         char[] tableauDeChar = motPropose.toCharArray();
@@ -167,6 +160,9 @@ public class MainActivity extends AppCompatActivity {
         return motmodifier;
     }
 
+    // Fonction qui lance l'affichage de l'écran de fin
+    // paramètres : cptotaux le nombre d'essais au total de toute la partie, mots la liste des mots à deviner, yesOrNo un tableau qui représente si les mots ont été trouvés ou non
+
     private void victoire(int cptotaux, String[] mots, int[] yesOrNo){
         Intent intent = new Intent(MainActivity.this, EndActivity.class);
         intent.putExtra("nombreEssaisTotaux", cptotaux);
@@ -175,12 +171,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-    private void defaite(String mot){
-        Intent intent = new Intent(MainActivity.this, EndActivity.class);
-        intent.putExtra("motATrouver", mot); // Remplacez motATrouver par la variable réelle
-        startActivity(intent);
-    }
 
+    // Préaffichage de proposition à vide
     private void afficherCasesVides(LinearLayout layout, int nombreLettresAttendues) {
         layout.removeAllViews(); // Effacer les vues précédentes
 
@@ -200,8 +192,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // mode déterministe
+    // mode déterministe de génération des mots avec des tailles en entrée
     private String[] deterministeMots(int[] longueurs){
+
+        // à relier avec la bdd pour la suite
         String[] mots = new String[longueurs.length];
 
         for (int i = 0; i < longueurs.length; i++) {
@@ -211,9 +205,9 @@ public class MainActivity extends AppCompatActivity {
         return mots;
     }
 
-    // mode random
+    // mode random : génération de tailles aléatoire et
     private String[] randomMots(){
-        // mot mystère
+
         Random random = new Random();
         // Obtenez un nombre aléatoire entre 2 (inclus) et 10 (exclus)
         String[] mots = {selectRandom(random.nextInt(8) + 2),selectRandom(random.nextInt(8) + 2),selectRandom(random.nextInt(8) + 2),selectRandom(random.nextInt(8) + 2),selectRandom(random.nextInt(8) + 2)};
@@ -225,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+        // prépare l'affichage des 6 propositions
         setContentView(R.layout.activity_main);
 
         LinearLayout propo1 = findViewById(R.id.Proposition1);
@@ -235,21 +229,22 @@ public class MainActivity extends AppCompatActivity {
         LinearLayout propo5 = findViewById(R.id.Proposition5);
         LinearLayout propo6 = findViewById(R.id.Proposition6);
         EditText editText = findViewById(R.id.EntreeMots);
+
+        // mode qui sera modifier selon l'endroit où on lance la partie
         String mode = "random";
 
         final String[] mot;
         if (mode.equals("random")) {
             mot = randomMots();
         } else{
+            // pour l'instant ça en attendant
             mot = randomMots();
         }
 
         final int[] indicePartie = {0};
 
 
-        // faire fonction de check in des lettres pour afficher en conséquence
-        // du toUpperCase
-        // Faire Char par char et attribué une value en mode matrice du mot -> couleur selon 0 1 2
+        // Mets des cases à vides grises pour indiquer la taille du mot
 
         afficherCasesVides(propo1, mot[indicePartie[0]].length());
         afficherCasesVides(propo2, mot[indicePartie[0]].length());
@@ -257,35 +252,40 @@ public class MainActivity extends AppCompatActivity {
         afficherCasesVides(propo4, mot[indicePartie[0]].length());
         afficherCasesVides(propo5, mot[indicePartie[0]].length());
         afficherCasesVides(propo6, mot[indicePartie[0]].length());
-        // faudra limiter selon le mot de la partie
+
+        // limiter selon le mot de la manche
         final int[] maxLength = {mot[indicePartie[0]].length()};
         editText.setFilters(new InputFilter[]{new InputFilter.AllCaps(),new InputFilter.LengthFilter(maxLength[0])});
-
-
 
 
         // Nombre mots partie et les trouvés.
         final int[] motsPartie = {0};
         final int[] motsTotal = {5};
         final int[] motsDecouverts = {0};
+        // mots trouvés ou non
         final int[] tableauDeInt = {0, 0, 0, 0, 0};
+        // les mots de la partie
         final String[] tableauDeMots = {"","","","",""};
         tableauDeMots[indicePartie[0]] = mot[indicePartie[0]];
         // Compteur de la proposition combien on est pour switch
         final int[] cpt = {1};
+
         final int[] cptotaux = {0};
 
-
+        // Bouton pour passer au mot suivant
         Button motSuivantButton = findViewById(R.id.motSuivantButton);
         motSuivantButton.setVisibility(View.INVISIBLE); // Masquer le bouton au début
 
+        // Bouton proposer
         Button button = findViewById(R.id.Propose);
         button.setOnClickListener(v -> {
             if(editText.getText().toString().length()== mot[indicePartie[0]].length() && rechercherMotDansFichier(editText.getText().toString())) {
                 switch (cpt[0]) {
 
                     case 1:
+                        // affichage résultat de la proposition
                         afficherLettresAvecCouleur(propo1, editText.getText().toString(), mot[indicePartie[0]]);
+                        // affichage des bonnes lettres de la proposition
                         afficherLettresAvecCouleur(propo2, motmodif(editText.getText().toString(),mot[indicePartie[0]]), mot[indicePartie[0]]);
                         cpt[0]++;
                         break;
@@ -318,6 +318,8 @@ public class MainActivity extends AppCompatActivity {
                     default:
                         break;
                 }
+
+                // Fin de partie
                 if(editText.getText().toString().equals(mot[indicePartie[0]]) && cpt[indicePartie[0]] <= 7){
 
                     motsDecouverts[0]++;
@@ -330,6 +332,7 @@ public class MainActivity extends AppCompatActivity {
                     motsPartie[0]++;
                     button.setEnabled(false);
                     cpt[0] = 8;
+                    // Fin de  partie
                 } else if ((!editText.getText().toString().equals(mot[indicePartie[0]])) && cpt[0] == 7) {
                     tableauDeMots[motsPartie[0]] = mot[indicePartie[0]];
                     motsPartie[0]++;
@@ -345,6 +348,8 @@ public class MainActivity extends AppCompatActivity {
                 editText.setText((""));
             }
         });
+
+        // La validation via la touche entrée du clavier
 
         editText.setOnKeyListener((view, keyCode, keyEvent) -> {
             if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && ( keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -412,6 +417,7 @@ public class MainActivity extends AppCompatActivity {
             return false; // Indique que l'événement n'a pas été géré
         });
 
+        // mot suivant
         motSuivantButton.setOnClickListener(v -> {
             // Générer un nouveau mot mystère
 
