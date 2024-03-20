@@ -51,6 +51,8 @@ public class ToolbarManager implements View.OnClickListener {
             } else if (view == moreButton) {
                 // Action à effectuer lorsque le bouton "More" est cliqué
                 // showToast("More button clicked");
+                Intent intent = new Intent(mContext, game.class);
+                mContext.startActivity(intent);
             }
     }
 
