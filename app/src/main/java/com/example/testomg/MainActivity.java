@@ -1,5 +1,6 @@
 package com.example.testomg;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -11,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
 import android.graphics.Color;
 import android.text.InputFilter;
 import android.widget.TextView;
@@ -95,13 +98,13 @@ public class MainActivity extends AppCompatActivity {
             // Comparer les lettres
             if (lettreProposee == lettreMystere) {
                 // Lettre bien placée (couleur verte)
-                return Color.GREEN;
+                return ContextCompat.getColor(this, R.color.VertMoyen);
             } else if (motMyst.contains(String.valueOf(lettreProposee))) {
                 // Lettre mal placée (couleur orange)
-                return Color.YELLOW;
+                return ContextCompat.getColor(this, R.color.JauneMoyen);
             } else {
                 // Lettre absente (couleur rouge)
-                return Color.RED;
+                return ContextCompat.getColor(this, R.color.RougeMoyen);
             }
     }
     private void adjustTextSizeBasedOnScreen(TextView textView) {
@@ -127,7 +130,8 @@ public class MainActivity extends AppCompatActivity {
             // Créez un TextView pour chaque lettre
             TextView lettreTextView = new TextView(this);
             lettreTextView.setText(String.valueOf(lettrePropo));
-            lettreTextView.setTextColor(Color.BLACK);
+            lettreTextView.setTypeface(null, Typeface.BOLD);
+            lettreTextView.setTextColor(Color.WHITE);
             lettreTextView.setGravity(Gravity.CENTER);
             adjustTextSizeBasedOnScreen(lettreTextView); // Ajustez la taille de la police selon vos besoins
             // Appliquez la couleur de fond en fonction de la lettre et de la règle que vous avez définie
@@ -139,11 +143,13 @@ public class MainActivity extends AppCompatActivity {
                     100, // Largeur de la vue vide (vous pouvez ajuster selon vos besoins)
                     ViewGroup.LayoutParams.MATCH_PARENT // Hauteur de la vue vide (correspond à celle du conteneur)
             );
-            params.setMargins(10, 3, 10, 3); // Ajustez les marges selon vos besoins
+            params.setMargins(10, 10, 10, 10); // Ajustez les marges selon vos besoins
             lettreTextView.setLayoutParams(params);
 
             layoute.addView(lettreTextView);
         }
+        layoute.setOrientation(LinearLayout.HORIZONTAL);
+        layoute.setGravity(Gravity.CENTER);
     }
 
     // Récupère le mot propose pour conserver un affichage des lettres qui sont bonnes dans l'affichage de proposition suivante
@@ -183,13 +189,15 @@ public class MainActivity extends AppCompatActivity {
             emptyTextView.setBackgroundColor(Color.GRAY); // Fond gris
             emptyTextView.setGravity(Gravity.CENTER); // Centrer le texte
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    100, // Largeur de la vue vide (vous pouvez ajuster selon vos besoins)
+                    100,// Largeur de la vue vide (vous pouvez ajuster selon vos besoins)
                     ViewGroup.LayoutParams.MATCH_PARENT // Hauteur de la vue vide (correspond à celle du conteneur)
             );
-            params.setMargins(10, 3, 10, 3); // Ajuster les marges selon vos besoins
+            params.setMargins(10, 10, 10, 10); // Ajuster les marges selon vos besoins
             emptyTextView.setLayoutParams(params);
             layout.addView(emptyTextView);
         }
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setGravity(Gravity.CENTER);
     }
 
     // mode déterministe de génération des mots avec des tailles en entrée
@@ -260,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Nombre mots partie et les trouvés.
         final int[] motsPartie = {0};
-        final int[] motsTotal = {5};
+        final int[] motsTotal = {2};
         final int[] motsDecouverts = {0};
         // mots trouvés ou non
         final int[] tableauDeInt = {0, 0, 0, 0, 0};
