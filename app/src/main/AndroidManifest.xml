@@ -24,6 +24,8 @@
 
         <activity android:name=".login"/>
 
+        <activity android:name=".game"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
