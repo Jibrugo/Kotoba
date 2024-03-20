@@ -2,4 +2,7 @@
 <resources>
     <color name="black">#FFFFFFFF</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="VertMoyen">#74c660</color>
+    <color name="RougeMoyen">#e54545</color>
+    <color name="JauneMoyen">#f3c723</color>
 </resources>
