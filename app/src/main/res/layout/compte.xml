@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="1dp"
+              >
+
+        <TextView
+            android:id="@+id/Titre"
+            android:layout_width="match_parent"
+            android:layout_height="86dp"
+            android:gravity="center"
+            android:text="COMPTE"
+            android:textColor="@color/black"
+            android:textSize="50dp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="61dp"
+            android:background="#009688" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#000000" />
+
+        <LinearLayout
+            android:background="#aebbba"
+            android:layout_width="match_parent"
+            android:layout_height="51dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Pseudo"
+                android:layout_width="225dp"
+                android:layout_height="51dp"
+                android:gravity="center"
+                android:text="Pseudo :"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="184dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text=" "
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#aebbba"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/LevelComplete"
+                android:layout_width="225dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Niveaux complétés :"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView8lk"
+                android:layout_width="184dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text=" "
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#aebbba"
+            android:layout_width="match_parent"
+            android:layout_height="73dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Motdevines"
+                android:layout_width="224dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Mots devinés :"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViefbfbfw8"
+                android:layout_width="184dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text=" "
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:background="#aebbba"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Nb_essais_totaux"
+                android:layout_width="224dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="Nombre d'essais Totaux :"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textVdfbfbfiew8"
+                android:layout_width="184dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text=" "
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view2svdf"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="#000000" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#009688"  />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
