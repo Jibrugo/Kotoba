@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".game">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#323232"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="136dp">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="63dp" />
+
+        <LinearLayout
+            android:id="@+id/Proposition1"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical" />
+
+        <LinearLayout
+            android:id="@+id/Proposition2"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/Proposition3"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/Proposition4"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/Proposition5"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal" />
+
+        <LinearLayout
+            android:id="@+id/Proposition6"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal" />
+
+        <Space
+            android:layout_width="416dp"
+            android:layout_height="20dp" />
+
+        <EditText
+            android:id="@+id/EntreeMots"
+            android:layout_width="232dp"
+            android:layout_height="87dp"
+            android:layout_gravity="center"
+            android:autofillHints=""
+            android:background="@drawable/input_style"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:ems="10"
+            android:hint="PROPOSITION"
+            android:textColor="#000000"
+            android:textColorHint="#000000"
+            android:gravity="center"
+            android:imeOptions="actionSend"
+            android:inputType="textCapCharacters"
+            android:minHeight="48dp"
+            tools:ignore="MissingConstraints" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <Button
+            android:id="@+id/Propose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_back"
+            android:text="PROPOSER" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="16dp" />
+
+        <Button
+            android:id="@+id/motSuivantButton"
+            android:layout_width="121dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/button_back"
+            android:text="MOT SUIVANT"
+            android:visibility="invisible" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="-198dp"
+            tools:layout_editor_absoluteY="480dp">
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
