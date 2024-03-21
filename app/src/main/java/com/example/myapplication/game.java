@@ -1,14 +1,9 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.ExtractedText;
-import android.view.inputmethod.ExtractedTextRequest;
-import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -22,9 +17,14 @@ public class game extends AppCompatActivity {
     public String[] propositions;
     public String[] secretWords;
     public String secretWord;
-
     private int indexGuess;
     private int indexWordl;
+
+    private int totalAttempt;
+    private int[] results;
+
+    private Audio audio;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +33,20 @@ public class game extends AppCompatActivity {
 
         String gameMode = "Random";
 
+        // Récupérer l'intent qui a démarré cette activité
+        Intent intent = getIntent();
+
+        // Récupérer la variable passée à partir de l'intent
+        int[] intArray = intent.getIntArrayExtra("INT_ARRAY");
+
+        Log.d("secret taille : ", String.valueOf(intArray[0]));
         this.wordManager = new WordManager(this);
 
         this.uiManager = new GameUIManager(this,this.wordManager,gameMode);
 
         this.propositions = new String[6];
-        this.secretWords = this.wordManager.getMultipleRandom(4,6,5);
+
+        this.secretWords = this.wordManager.getMultipleRandomForLevels(intArray); // this.wordManager.getMultipleRandom(4,6,5);
 
         for (int i = 0; i < secretWords.length; i++) {
             Log.d("secret "+i+" : ",this.secretWords[i]);
@@ -47,7 +55,14 @@ public class game extends AppCompatActivity {
         Log.d("secretWords",String.join(" , ",this.secretWords));
         this.updateSecretWord();
 
+        this.indexGuess = 0;
+        this.indexWordl = 0;
+        this.totalAttempt = 0;
+        this.results = new int[this.secretWords.length];
 
+        for (int i = 0; i < this.results.length; i++) {
+            this.results[i] = 0;
+        }
 
         uiManager.displayEmptyGameGrid(this.secretWord);
         uiManager.setSecretWord(this.secretWord);
@@ -58,16 +73,13 @@ public class game extends AppCompatActivity {
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        this.audio = new Audio(this);
 
 
 //        displayToast(textBeforeCursor);
 
     }
 
-    protected void resetGame() {
-        this.indexGuess = 0;
-        this.indexWordl = 0;
-    }
 
     private void updateSecretWord() {
         this.secretWord = this.secretWords[this.indexWordl];
@@ -96,7 +108,7 @@ public class game extends AppCompatActivity {
                 // TODO : Verifier si victoire
 
                 boolean isEnd = checkEnd(motPropose, secretWord);
-
+                this.totalAttempt++;
                 if (!isEnd) {
                     if (this.indexGuess < 5) {
 //                        Log.d("GameUIManager", "Aff +1");
@@ -104,6 +116,7 @@ public class game extends AppCompatActivity {
 //                        uiManager.afficherLettresAvecCouleur(this.indexGuess + 1, editedWord, secretWord);
 
                         this.indexGuess++;
+
                     }
                 }
 
@@ -120,13 +133,18 @@ public class game extends AppCompatActivity {
     private boolean checkEnd(String proposition, String motMystere) {
         boolean find = this.wordManager.areWordsEquals(proposition,motMystere);
 
+
         if (find && (indexGuess <= 5)) {
             // Si le mot à été trouvé et que ça à été fait en moins de 6 essais
             // TODO : Incrémenter le compteur de victoire
             this.uiManager.setNextBtnVisibility(true);
+            this.results[indexWordl] = 1;
+//            audio.play(R.raw.motus);
         } else if (!find && (indexGuess == 5)) {
             // Si le mot n'a pas été trouvé et qu'il n'y a plus d'essais possible
             this.uiManager.setNextBtnVisibility(true);
+            this.results[indexWordl] = 0;
+//
         }
 
         return find;
@@ -134,13 +152,24 @@ public class game extends AppCompatActivity {
 
 
     protected void start_next_word() {
-        displayToast("Nouvelle partie");
-        this.indexGuess = 0;
-        this.indexWordl++;
-        updateSecretWord();
-        this.uiManager.setSecretWord(this.secretWord);
-        this.uiManager.setNextBtnVisibility(false);
-        this.uiManager.resetGameUi();
+        if (this.indexWordl < 4) {
+            displayToast("Nouvelle partie");
+            this.indexGuess = 0;
+            this.indexWordl++;
+            updateSecretWord();
+            this.uiManager.setSecretWord(this.secretWord);
+            this.uiManager.setNextBtnVisibility(false);
+            this.uiManager.resetGameUi();
+        } else {
+            Intent intent = new Intent(this, end.class);
+
+            intent.putExtra("nombreEssaisTotaux", this.totalAttempt);
+            intent.putExtra("listMots", this.secretWords);
+            intent.putExtra("listValidOrNot", this.results);
+            startActivity(intent);
+
+
+        }
     }
 
 }
