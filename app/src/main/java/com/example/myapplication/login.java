@@ -13,7 +13,7 @@ public class login extends AppCompatActivity {
         setContentView(R.layout.login); // Lier le layout XML à cette activité
 
         // affiche un toast
-        // Toast.makeText(login.this, "Page login", Toast.LENGTH_SHORT).show();
+        Toast.makeText(login.this, "Page login", Toast.LENGTH_SHORT).show();
 
         View toolbar = findViewById(R.id.toolbar);
         ToolbarManager toolbarManager = new ToolbarManager(this);
