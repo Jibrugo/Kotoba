@@ -2,6 +2,8 @@ package com.example.myapplication;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.media.MediaPlayer;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -16,6 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.graphics.Typeface;
+import androidx.core.content.ContextCompat;
 
 interface MyFunction {
     void execute();
@@ -31,19 +35,19 @@ public class GameUIManager {
     private Button nextWordBtn;
     private int indicePartie;
     private int indiceGuess;
-
     private String[] secretWords;
     private String secretWord;
 
+    private Audio audio;
+
     public GameUIManager(game activity, WordManager wordManager, String gameMode) {
         this.activity = activity;
-        activity.displayToast("Hello");
         this.wordManager = wordManager;
 
         this.propositions = initializePropositionLayouts();
         this.editText = activity.findViewById(R.id.EntreeMots);
         this.answerBtn = activity.findViewById(R.id.Propose);
-//        this.editText.setVisibility(View.INVISIBLE);
+
 
         this.nextWordBtn = activity.findViewById(R.id.motSuivantButton);
         this.nextWordBtn.setVisibility(View.INVISIBLE);
@@ -51,6 +55,8 @@ public class GameUIManager {
         this.indicePartie = 0;
         this.indiceGuess = 0;
         this.gameMode = gameMode;
+
+        this.audio = new Audio(this.activity);
     }
 
     public void adjustTextSizeBasedOnScreen(TextView textView) {
@@ -64,27 +70,46 @@ public class GameUIManager {
     public void afficherLettresAvecCouleur(int indexLayout, String motPropose, String motMystere) {
         this.propositions[indexLayout].removeAllViews();
 
+
         for (int i = 0; i < motPropose.length(); i++) {
             char lettrePropo = Character.toUpperCase(motPropose.charAt(i));
             char lettreMyst = Character.toUpperCase(motMystere.charAt(i));
             TextView lettreTextView = new TextView(activity);
             lettreTextView.setText(String.valueOf(lettrePropo));
-            lettreTextView.setTextColor(Color.BLACK);
+            lettreTextView.setTypeface(null, Typeface.BOLD);
+            lettreTextView.setTextColor(Color.WHITE);
             lettreTextView.setGravity(Gravity.CENTER);
             adjustTextSizeBasedOnScreen(lettreTextView);
 
             int couleurFond = activity.wordManager.compareWord(lettreMyst, lettrePropo, motMystere);
+            play_sound(couleurFond);
 
-            lettreTextView.setBackgroundColor(couleurFond);
+
+
+            GradientDrawable drawable = new GradientDrawable();
+            float cornerRadius = 8; // Récupérer la valeur depuis les dimensions
+            drawable.setCornerRadius(cornerRadius);
+            drawable.setColor(couleurFond);
+            lettreTextView.setBackground(drawable);
+
+
 
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     100,
                     ViewGroup.LayoutParams.MATCH_PARENT
             );
 
-            params.setMargins(10, 3, 10, 3);
+            params.setMargins(10, 10, 10, 10);
             lettreTextView.setLayoutParams(params);
             this.propositions[indexLayout].addView(lettreTextView);
+            this.propositions[indexLayout].setOrientation(LinearLayout.HORIZONTAL);
+            this.propositions[indexLayout].setGravity(Gravity.CENTER);
+        }
+
+        boolean find = this.wordManager.areWordsEquals(motPropose,motMystere);
+
+        if (find) {
+            audio.play(R.raw.motus);
         }
     }
 
@@ -93,15 +118,35 @@ public class GameUIManager {
         for (int i = 0; i < nombreLettresAttendues; i++) {
             TextView emptyTextView = new TextView(activity);
             emptyTextView.setText(" ");
-            emptyTextView.setBackgroundColor(Color.GRAY);
+
+            GradientDrawable drawable = new GradientDrawable();
+
+            // Définir le rayon des coins arrondis
+            float cornerRadius = 8; // Récupérer la valeur depuis les dimensions
+            drawable.setCornerRadius(cornerRadius);
+            drawable.setColor(Color.GRAY);
+            emptyTextView.setBackground(drawable);
+
+//            emptyTextView.setBackgroundResource(R.drawable.letter_style);
+//            emptyTextView.setBackgroundColor(Color.GRAY);
+
+
             emptyTextView.setGravity(Gravity.CENTER);
+
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                     100,
                     ViewGroup.LayoutParams.MATCH_PARENT
             );
-            params.setMargins(10, 3, 10, 3);
+
+            params.setMargins(10, 10, 10, 10);
+
             emptyTextView.setLayoutParams(params);
+
             this.propositions[indexLayout].addView(emptyTextView);
+
+            this.propositions[indexLayout].setOrientation(LinearLayout.HORIZONTAL);
+
+            this.propositions[indexLayout].setGravity(Gravity.CENTER);
         }
     }
     /////////////////////////
@@ -147,7 +192,7 @@ public class GameUIManager {
 
         this.editText.setOnKeyListener((view, keyCode, keyEvent) -> {
             char unicodeChar = (char) keyEvent.getUnicodeChar();
-//            Log.d("keyDown","Key : "+unicodeChar);
+
             if ((keyEvent.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                 function.execute();
                 return true;
@@ -201,7 +246,30 @@ public class GameUIManager {
         this.answerBtn.setEnabled(enabled);
     }
 
+    private void play_sound(int letter_color) {
 
+        String color = String.valueOf(letter_color);
+        String green = String.valueOf(ContextCompat.getColor(activity, R.color.VertMoyen));
+        String yellow = String.valueOf(ContextCompat.getColor(activity, R.color.JauneMoyen));
+        String red = String.valueOf(ContextCompat.getColor(activity, R.color.RougeMoyen));
+
+        Log.d("Couleur " , color);
+        Log.d("Couleur " , "Green " + green);
+        Log.d("Couleur " , "Jaune " + yellow);
+        Log.d("Couleur " , "Rouge " + red);
+
+        if (color.equals(green)) {
+            audio.play(R.raw.good);
+            Log.d("Sound" , "GOOD");
+        } else if (color.equals(yellow))  {
+            audio.play(R.raw.bad);
+            Log.d("Sound" , "SO SO");
+        } else if (color.equals(red))  {
+            audio.play(R.raw.notfound);
+            Log.d("Sound" , "BAD");
+        }
+
+    }
 
 
 }
