@@ -13,17 +13,23 @@ import androidx.appcompat.widget.AppCompatImageButton;
 
 public class milestone extends AppCompatImageButton {
     private int progress;
+    private int btnId;
 
     @SuppressLint("ResourceType")
-    public milestone(Context context) {
+    public milestone(Context context, int id) {
         super(context);
         this.progress = 0;
+        this.btnId = id;
         // Initialiser votre ImageButton ici, par exemple :
         this.setScaleType(ScaleType.CENTER_CROP);
         this.setBackgroundResource(R.drawable.score_0_5);
         this.setPaddingRelative(40,40,40,40);
         this.setImageResource(R.drawable.star_solid);
         setupClickListener();
+    }
+
+    public int getBtnId() {
+        return this.btnId;
     }
 
     // Méthode pour définir l'image de manière dynamique
