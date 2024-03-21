@@ -4,10 +4,20 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.Log;
 
+import android.graphics.Typeface;
+import android.widget.Toast;
+
+import androidx.core.content.ContextCompat;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -66,7 +76,6 @@ public class WordManager {
         // Obtenez un nombre aléatoire entre 2 (inclus) et 10 (exclus)
 
         String[] mots = new String[wordCount];
-        mots[4] = "lol";
         for (int i = 0; i< wordCount; i++) {
             int taille = random.nextInt(maxSize) + minSize;
             mots[i] = getRandom(taille);
@@ -74,6 +83,17 @@ public class WordManager {
         }
 
         // String[] mots = {selectRandom(random.nextInt(8) + 2),selectRandom(random.nextInt(8) + 2),selectRandom(random.nextInt(8) + 2),selectRandom(random.nextInt(8) + 2),selectRandom(random.nextInt(8) + 2)};
+        return mots;
+    }
+
+    public String[] getMultipleRandomForLevels(int [] tailles){
+        int wordCount = tailles.length;
+        String[] mots = new String[wordCount];
+        for (int i = 0; i< wordCount; i++) {
+            int taille = tailles[i];
+            mots[i] = getRandom(taille);
+            Log.d("words", String.valueOf(taille));
+        }
         return mots;
     }
 
@@ -145,13 +165,14 @@ public class WordManager {
         // Comparer les lettres
         if (lettreProposee == lettreMystere) {
             // Lettre bien placée (couleur verte)
-            return Color.GREEN;
+            return ContextCompat.getColor(context, R.color.VertMoyen);
         } else if (motMyst.contains(String.valueOf(lettreProposee))) {
             // Lettre mal placée (couleur orange)
-            return Color.YELLOW;
+//            return Color.YELLOW;
+            return ContextCompat.getColor(context, R.color.JauneMoyen);
         } else {
             // Lettre absente (couleur rouge)
-            return Color.RED;
+            return ContextCompat.getColor(context, R.color.RougeMoyen);
         }
     }
 
@@ -175,6 +196,78 @@ public class WordManager {
 
     public boolean areWordsEquals(String proposition, String motMystere) {
         return proposition.equals(motMystere);
+    }
+
+    public static JSONObject readJsonFileFromResources(Context context, int resourceId) {
+        JSONObject jsonObject = null;
+        try {
+            // Ouvrir un flux vers le fichier JSON dans les ressources
+            InputStream inputStream = context.getResources().openRawResource(resourceId);
+
+            // Lire le contenu du fichier JSON en tant que chaîne
+            String jsonString = readJsonStringFromInputStream(inputStream);
+
+            // Parser la chaîne JSON en un objet JSONObject
+            jsonObject = new JSONObject(jsonString);
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    private static String readJsonStringFromInputStream(InputStream inputStream) throws IOException {
+        StringBuilder stringBuilder = new StringBuilder();
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+        }
+        return stringBuilder.toString();
+    }
+
+
+    public int[] getWordsSize(int gameId) {
+
+        JSONObject jsonObject = readJsonFileFromResources(this.context, R.raw.test);
+
+        try {
+
+        JSONObject item = jsonObject.getJSONObject(String.valueOf(gameId));
+
+        String sizeStr = item.getString("size");
+
+        return Arrays.stream(sizeStr.split(","))
+                .mapToInt(Integer::parseInt)
+                .toArray();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public void test() {
+        Toast.makeText(this.context, "Bouton cliqué", Toast.LENGTH_SHORT).show();
+    }
+
+    public int getWordsScore(int gameId) {
+        JSONObject jsonObject = readJsonFileFromResources(this.context, R.raw.test);
+
+        try {
+
+            JSONObject item = jsonObject.getJSONObject(String.valueOf(gameId));
+
+            Log.d("Json", String.valueOf(item));
+
+            int score = item.getInt("score");
+            return score;
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
 }
