@@ -21,7 +21,7 @@ public class starting extends AppCompatActivity {
         mediaPlayer = MediaPlayer.create(this, R.raw.lama);
 
         // Lancer la lecture du son
-        mediaPlayer.start();
+        // mediaPlayer.start();
 
         // Initialiser un Handler
         handler = new Handler();
